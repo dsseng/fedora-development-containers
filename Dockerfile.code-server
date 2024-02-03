@@ -20,7 +20,7 @@ ENV LANG=en_US.UTF-8
 RUN echo 'LANG="en_US.UTF-8"' > /etc/locale.conf
 RUN localedef -c -i en_US -f UTF-8 en_US.UTF-8
 
-RUN adduser coder && echo "coder ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd
+RUN useradd -s /usr/bin/zsh -u 1000 coder && echo "coder ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd
 
 RUN ARCH="$(uname -m | sed 's/x86_64/amd64/g' | sed 's/aarch64/arm64/g')" \
   && curl -fsSL "https://github.com/boxboat/fixuid/releases/download/v0.6.0/fixuid-0.6.0-linux-$ARCH.tar.gz" | tar -C /usr/local/bin -xzf - \
