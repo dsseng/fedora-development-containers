@@ -18,6 +18,7 @@ RUN dnf install -y \
 
 COPY entrypoint.sh /usr/bin/entrypoint.sh
 RUN dnf install -y /tmp/code-server*.rpm
+RUN rm /tmp/code-server*.rpm && dnf clean all
 
 ENV LANG=en_US.UTF-8
 RUN echo 'LANG="en_US.UTF-8"' > /etc/locale.conf
