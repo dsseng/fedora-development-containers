@@ -1,5 +1,6 @@
 FROM fedora
 
+RUN dnf update -y
 RUN dnf install -y \
     curl \
     git \
@@ -14,6 +15,7 @@ RUN dnf install -y \
     dumb-init \
     glibc-locale-source \
     glibc-langpack-en \
+    'dnf-command(builddep)' \
   && git lfs install
 
 ENV LANG=en_US.UTF-8
