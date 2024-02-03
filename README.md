@@ -6,6 +6,6 @@ Based on https://github.com/coder/code-server, all relevant trademarks and right
 
 Usage [as documented in the original](https://coder.com/docs/code-server/latest/install#docker)
 
-## helix
+## helix, nvim
 
 Run with `-it` flags. Zsh is the default session, could be overriden in the run command.
