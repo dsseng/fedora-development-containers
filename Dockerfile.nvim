@@ -10,6 +10,7 @@ RUN dnf install -y \
     procps \
     wget \
     zsh \
+    ripgrep \
     dumb-init \
     glibc-locale-source \
     glibc-langpack-en \
