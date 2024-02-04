@@ -1,5 +1,7 @@
 # Development images based on Fedora
 
+Fedora images with commmon remote development tools and various toolchains. Tested on x86_64 and aarch64 with podman, but should work with docker as well.
+
 Based on https://github.com/coder/code-server, all relevant trademarks and rights are of their respective owners.
 
 ## Building
