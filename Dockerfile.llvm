@@ -11,6 +11,7 @@ USER 1000
 ENV USER=coder
 WORKDIR /home/coder
 
+ARG CODE_EDITOR
 RUN if [ "$CODE_EDITOR" = "code-server" ] ; \
   then code-server --install-extension llvm-vs-code-extensions.vscode-clangd \
   && code-server --install-extension vadimcn.vscode-lldb \
