@@ -1,0 +1,18 @@
+ARG CODE_EDITOR=helix
+FROM fedora-${CODE_EDITOR}
+
+USER 0
+env USER=root
+WORKDIR /tmp
+
+RUN dnf install -y golang && rm -rf /var/cache/dnf
+
+USER 1000
+ENV USER=coder
+WORKDIR /home/coder
+
+RUN mkdir -p ~/go
+RUN echo 'export GOPATH=$HOME/go' >> ~/.zshrc
+
+ARG CODE_EDITOR
+RUN if [ "$CODE_EDITOR" = "code-server" ] ; then code-server --install-extension golang.go ; fi

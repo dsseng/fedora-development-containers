@@ -1,0 +1,19 @@
+ARG CODE_EDITOR=helix
+FROM fedora-${CODE_EDITOR}
+
+USER 0
+env USER=root
+WORKDIR /tmp
+
+RUN dnf install -y lldb && rm -rf /var/cache/dnf
+
+USER 1000
+ENV USER=coder
+WORKDIR /home/coder
+
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+
+ARG CODE_EDITOR
+RUN if [ "$CODE_EDITOR" = "code-server" ] ; \
+  then code-server --install-extension rust-lang.rust-analyzer \
+  && code-server --install-extension vadimcn.vscode-lldb ; fi
