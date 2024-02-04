@@ -1,0 +1,17 @@
+ARG CODE_EDITOR=helix
+FROM fedora-${CODE_EDITOR}
+
+USER 0
+env USER=root
+WORKDIR /tmp
+
+RUN dnf install -y clang clang-tools-extra lldb && rm -rf /var/cache/dnf
+
+USER 1000
+ENV USER=coder
+WORKDIR /home/coder
+
+RUN if [ "$CODE_EDITOR" = "code-server" ] ; \
+  then code-server --install-extension llvm-vs-code-extensions.vscode-clangd \
+  && code-server --install-extension vadimcn.vscode-lldb \
+  && code-server --install-extension xaver.clang-format ; fi

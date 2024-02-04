@@ -9,6 +9,8 @@ podman build -f Dockerfile.base -t fedora-development-base
 podman build -f Dockerfile.code-server -t fedora-code-server
 podman build -f Dockerfile.helix -t fedora-helix
 podman build -f Dockerfile.nvim -t fedora-nvim
+# Select the wanted editor
+podman build -f Dockerfile.llvm --build-arg="CODE_EDITOR=helix" -t fedora-helix-llvm
 ```
 
 ## code-server
