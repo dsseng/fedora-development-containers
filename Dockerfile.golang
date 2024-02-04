@@ -13,6 +13,10 @@ WORKDIR /home/coder
 
 RUN mkdir -p ~/go
 RUN echo 'export GOPATH=$HOME/go' >> ~/.zshrc
+RUN source ~/.zshrc
+
+RUN go install -v golang.org/x/tools/gopls@latest && go clean -cache
+RUN go install -v github.com/go-delve/delve/cmd/dlv@latest && go clean -cache
 
 ARG CODE_EDITOR
 RUN if [ "$CODE_EDITOR" = "code-server" ] ; then code-server --install-extension golang.go ; fi
