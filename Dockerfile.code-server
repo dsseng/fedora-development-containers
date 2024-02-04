@@ -1,7 +1,7 @@
 FROM fedora
 
-RUN dnf update -y
-RUN dnf install -y \
+RUN dnf update -y \
+    && dnf install -y \
     curl \
     git \
     git-lfs \
@@ -13,14 +13,14 @@ RUN dnf install -y \
     zsh \
     ripgrep \
     dumb-init \
-    glibc-locale-source \
     glibc-langpack-en \
     'dnf-command(builddep)' \
-  && git lfs install
+    xz \
+    && dnf clean all
+RUN git lfs install
 
 ENV LANG=en_US.UTF-8
 RUN echo 'LANG="en_US.UTF-8"' > /etc/locale.conf
-RUN localedef -c -i en_US -f UTF-8 en_US.UTF-8
 
 RUN useradd -s /usr/bin/zsh -u 1000 coder && echo "coder ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd
 
@@ -32,10 +32,10 @@ RUN ARCH="$(uname -m | sed 's/x86_64/amd64/g' | sed 's/aarch64/arm64/g')" \
   && printf "user: coder\ngroup: coder\n" > /etc/fixuid/config.yml
 
 RUN ARCH="$(uname -m | sed 's/x86_64/amd64/g' | sed 's/aarch64/arm64/g')" \
-  && wget "https://github.com/coder/code-server/releases/download/v4.20.1/code-server-4.20.1-$ARCH.rpm" -O /tmp/code-server.rpm
-RUN wget https://github.com/coder/code-server/raw/84ca27278b68150e22d25ec9183a4835239b6e44/ci/release-image/entrypoint.sh -O /usr/bin/entrypoint.sh && chmod +x /usr/bin/entrypoint.sh
-RUN dnf install -y /tmp/code-server.rpm
-RUN rm /tmp/code-server.rpm && dnf clean all
+  && wget "https://github.com/coder/code-server/releases/download/v4.20.1/code-server-4.20.1-$ARCH.rpm" -O /tmp/code-server.rpm \
+  && wget https://github.com/coder/code-server/raw/84ca27278b68150e22d25ec9183a4835239b6e44/ci/release-image/entrypoint.sh -O /usr/bin/entrypoint.sh && chmod +x /usr/bin/entrypoint.sh \
+  && rpm -i /tmp/code-server.rpm \
+  && rm /tmp/code-server.rpm
 
 # This way, if someone sets $DOCKER_USER, docker-exec will still work as
 # the uid will remain the same. note: only relevant if -u isn't passed to

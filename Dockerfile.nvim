@@ -1,7 +1,7 @@
 FROM fedora
 
-RUN dnf update -y
-RUN dnf install -y \
+RUN dnf update -y \
+    && dnf install -y \
     curl \
     git \
     git-lfs \
@@ -13,14 +13,14 @@ RUN dnf install -y \
     zsh \
     ripgrep \
     dumb-init \
-    glibc-locale-source \
     glibc-langpack-en \
     'dnf-command(builddep)' \
-  && git lfs install
+    xz \
+    && dnf clean all
+RUN git lfs install
 
 ENV LANG=en_US.UTF-8
 RUN echo 'LANG="en_US.UTF-8"' > /etc/locale.conf
-RUN localedef -c -i en_US -f UTF-8 en_US.UTF-8
 
 RUN useradd -s /usr/bin/zsh -u 1000 coder && echo "coder ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd
 
