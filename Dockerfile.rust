@@ -5,7 +5,7 @@ USER 0
 env USER=root
 WORKDIR /tmp
 
-RUN dnf install -y lldb && rm -rf /var/cache/dnf
+RUN dnf install -y gcc lldb && rm -rf /var/cache/dnf
 
 USER 1000
 ENV USER=coder
