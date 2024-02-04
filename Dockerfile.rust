@@ -11,7 +11,7 @@ USER 1000
 ENV USER=coder
 WORKDIR /home/coder
 
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --profile minimal -c "rustfmt,clippy,rust-analyzer" -y
 
 ARG CODE_EDITOR
 RUN if [ "$CODE_EDITOR" = "code-server" ] ; \
