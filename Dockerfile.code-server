@@ -16,7 +16,7 @@ RUN dnf update -y \
     glibc-langpack-en \
     'dnf-command(builddep)' \
     xz \
-    && dnf clean all
+    && rm -rf /var/cache/dnf
 RUN git lfs install
 
 ENV LANG=en_US.UTF-8
