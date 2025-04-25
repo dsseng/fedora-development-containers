@@ -1,0 +1,20 @@
+ARG CODE_EDITOR=code-insiders
+FROM fedora-${CODE_EDITOR}
+
+USER 0
+ENV USER=root
+WORKDIR /tmp
+
+RUN dnf install -y awk && rm -rf /var/cache/dnf
+
+USER 1000
+ENV USER=coder
+WORKDIR /home/coder
+
+RUN curl -L https://dot.net/v1/dotnet-install.sh | sh -s -- -c STS
+
+ARG CODE_EDITOR
+RUN if [ "$CODE_EDITOR" = "code-insiders" ] ; then code-insiders --extensions-dir ~/.vscode-server-insiders/extensions --install-extension ms-dotnettools.csdevkit ; fi
+
+ENV PATH=$PATH:/home/coder/.dotnet
+ENV DOTNET_ROOT=/home/coder/.dotnet
