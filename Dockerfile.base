@@ -39,4 +39,6 @@ USER 1000
 ENV USER=coder
 WORKDIR /home/coder
 
+RUN INSTALL_DEPENDENCIES=false sh -c "$(wget -O- https://raw.githubusercontent.com/deluan/zsh-in-docker/55a4e476f78f37204af9dfc0290a92e52cf881b1/zsh-in-docker.sh)"
+
 ENTRYPOINT ["zsh"]
