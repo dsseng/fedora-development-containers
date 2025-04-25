@@ -1,0 +1,19 @@
+FROM fedora-development-base
+
+USER 0
+ENV USER=root
+WORKDIR /tmp
+
+RUN <<-EOF
+  rpm --import https://packages.microsoft.com/keys/microsoft.asc
+  echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\nautorefresh=1\ntype=rpm-md\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" | sudo tee /etc/yum.repos.d/vscode.repo > /dev/null
+  dnf install -y code-insiders
+  rm -rf /var/cache/dnf
+EOF
+
+USER 1000
+ENV USER=coder
+WORKDIR /home/coder
+
+EXPOSE 8000
+ENTRYPOINT ["code-insiders", "serve-web"]
