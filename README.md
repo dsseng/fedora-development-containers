@@ -17,6 +17,17 @@ podman build -f Dockerfile.rust --build-arg="CODE_EDITOR=nvim" -t fedora-nvim-ru
 podman build -f Dockerfile.golang --build-arg="CODE_EDITOR=code-server" -t fedora-code-server-golang
 ```
 
+```bash
+docker build -f Dockerfile.base -t fedora-development-base .
+docker build -f Dockerfile.code-server -t fedora-code-server .
+docker build -f Dockerfile.helix -t fedora-helix .
+docker build -f Dockerfile.nvim -t fedora-nvim .
+# Select the desired editors and toolchains
+docker build -f Dockerfile.llvm --build-arg="CODE_EDITOR=helix" -t fedora-helix-llvm .
+docker build -f Dockerfile.rust --build-arg="CODE_EDITOR=nvim" -t fedora-nvim-rust .
+docker build -f Dockerfile.golang --build-arg="CODE_EDITOR=code-server" -t fedora-code-server-golang .
+```
+
 ## code-server
 
 Usage [as documented in the original](https://coder.com/docs/code-server/latest/install#docker)
