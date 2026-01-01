@@ -5,7 +5,7 @@ USER 0
 env USER=root
 WORKDIR /tmp
 
-RUN dnf install -y clang clang-tools-extra lldb && rm -rf /var/cache/dnf
+RUN dnf install -y clang clang-tools-extra lldb ccache && dnf builddep -y ceph && rm -rf /var/cache/dnf
 
 USER 1000
 ENV USER=coder
