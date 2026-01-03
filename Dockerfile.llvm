@@ -5,7 +5,24 @@ USER 0
 env USER=root
 WORKDIR /tmp
 
-RUN dnf install -y clang clang-tools-extra lldb ccache jq iproute hostname && dnf builddep -y ceph && rm -rf /var/cache/dnf
+RUN dnf update -y \
+    && dnf install -y \
+    clang \
+    clang-tools-extra \
+    lldb \
+    fio \
+    ccache \
+    jq \
+    iproute \
+    hostname \
+    gnutls-devel \
+    hwloc-devel \
+    ragel \
+    lksctp-tools-devel \
+    libasan libubsan liblsan libtsan libasan-static libubsan-static liblsan-static libtsan-static \
+    python3-scipy python3-cherrypy python3-bcrypt python3-routes fuse3 \
+    && dnf builddep -y ceph \
+    && rm -rf /var/cache/dnf /var/cache/libdnf5
 
 USER 1000
 ENV USER=coder
